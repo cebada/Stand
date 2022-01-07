@@ -1,0 +1,68 @@
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:stand/components/partnerCard.dart';
+import 'package:stand/models/entity.dart';
+import 'dart:convert';
+
+
+
+class PartnerList extends StatefulWidget {
+  @override
+  _PartnerListState createState() => _PartnerListState();
+}
+
+class _PartnerListState extends State<PartnerList> {
+  List<Entity> partners = [];
+
+  Future getData() async {
+    Response response = await http.get(Uri.parse('http://10.0.2.2:8080/partners'));
+    List jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      setState(() {
+        for (Map<String, dynamic> data in jsonData) {
+          Entity partner = Entity.fromJson(data);
+          partners.add(partner);
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Partners'),
+      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Image(
+              image: AssetImage('assets/logo_rocha.png'),
+              height: 60,
+              width: 60,
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: partners == null ? 0 : partners.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return PartnerCard(partners[index]);
+                }),
+          )
+        ],
+      )),
+    );
+  }
+}

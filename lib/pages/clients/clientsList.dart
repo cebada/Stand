@@ -1,0 +1,67 @@
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:stand/components/clientCard.dart';
+import 'package:stand/models/entity.dart';
+import 'dart:convert';
+
+
+class ClientsList extends StatefulWidget {
+  @override
+  _ClientsListState createState() => _ClientsListState();
+}
+
+class _ClientsListState extends State<ClientsList> {
+  List<Entity> clients = [];
+
+  Future getData() async {
+    Response response = await http.get(Uri.parse('http://10.0.2.2:8080/clients'));
+    List jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      setState(() {
+        for (Map<String, dynamic> data in jsonData) {
+          Entity client = Entity.fromJson(data);
+          clients.add(client);
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Clients'),
+      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Image(
+              image: AssetImage('assets/logo_rocha.png'),
+              height: 60,
+              width: 60,
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: clients == null ? 0 : clients.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ClientCard(clients[index]);
+                }),
+          )
+        ],
+      )),
+    );
+  }
+}
