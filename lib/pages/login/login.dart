@@ -75,62 +75,62 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text("Login"),
-          backgroundColor: Colors.red[600],
-        ),
-        body: Column(
-            children: [
-              CompanyLogo(120, 120),
-              Padding(
-                padding: EdgeInsets.all(25.0),
-                child: Center(
-                  child: Form(
-                    autovalidateMode: AutovalidateMode.always,
-                    key: formKey,
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text("Login"),
+        backgroundColor: Colors.red[600],
+      ),
+      body: Column(
+        children: [
+          CompanyLogo(120, 120),
+          Padding(
+            padding: EdgeInsets.all(25.0),
+            child: Center(
+              child: Form(
+                key: formKey,
+                autovalidateMode: AutovalidateMode.always,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      key: Key("usernameFormField"),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), labelText: "Username"),
+                      validator: RequiredValidator(errorText: "Required"),
+                      onSaved: (String value) {
+                        this.user.username = value;
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 20.0,
+                      ),
+                      child: TextFormField(
+                          key: Key("passwordFormField"),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Username"),
+                            border: OutlineInputBorder(),
+                            labelText: "Password",
+                          ),
                           validator: RequiredValidator(errorText: "Required"),
                           onSaved: (String value) {
-                            this.user.username = value;
+                            this.user.password = value;
                           },
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 20.0,
-                          ),
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: "Password",
-                              ),
-                              validator:
-                                  RequiredValidator(errorText: "Required"),
-                              onSaved: (String value) {
-                                this.user.password = value;
-                              },
-                              obscureText: true),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(
-                              top: 20.0,
-                            ),
-                            child: RaisedButton(
-                              onPressed: validate,
-                              child: Text("Login"),
-                            )),
-                      ],
+                          obscureText: true),
                     ),
-                  ),
+                    Padding(
+                        padding: EdgeInsets.only(
+                          top: 20.0,
+                        ),
+                        child: RaisedButton(
+                          onPressed: validate,
+                          child: Text("Login"),
+                        )),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        );
+        ],
+      ),
+    );
   }
 }

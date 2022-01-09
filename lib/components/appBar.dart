@@ -17,6 +17,7 @@ class StandAppBar extends StatelessWidget with PreferredSizeWidget{
       backgroundColor: Colors.red[600],
       actions: [
         IconButton(
+          key: Key("logoutButton"),
           onPressed: () {
             createAlertDialogLogout(
                 context,
@@ -49,6 +50,7 @@ class StandAppBar extends StatelessWidget with PreferredSizeWidget{
                   child: Text("No"),
                 ),
                 CupertinoDialogAction(
+                  key: Key("logoutDialogAction"),
                   onPressed: () {
                     Navigator.pushNamedAndRemoveUntil(context, Routes.LoginRoute, (route) => false);
                   },

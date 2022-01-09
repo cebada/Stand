@@ -21,6 +21,7 @@ class _SearchPlateState extends State<SearchPlate> {
     return Padding(
       padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       child: TextField(
+        key: Key("filter"),
         onChanged: (value) => widget._filter == "car" ? _runFilterCar(value) : _runFilterSale(value),
         decoration: const InputDecoration(
             labelText: 'Search license plate',
