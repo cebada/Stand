@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stand/main.dart';
-import 'package:stand/models/car.dart';
 import 'package:stand/models/sale.dart';
 
 class SaleCard extends StatefulWidget {
@@ -13,7 +11,6 @@ class SaleCard extends StatefulWidget {
 }
 
 class _SaleCardState extends State<SaleCard> {
-  Sale _sale;
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +19,12 @@ class _SaleCardState extends State<SaleCard> {
         child: Column(
           children: [
             ListTile(
-              title: Text("${_sale.car.plate} at ${_sale.date}",
+              title: Text("${widget._sale.car.plate} at ${widget._sale.date}",
                   style: TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(
-                  "${_sale.car.brand} ${_sale.car.model} for ${_sale.car.price} € to ${_sale.client.name}"),
+                  "${widget._sale.car.brand} ${widget._sale.car.model} for ${widget._sale.car.price} € to ${widget._sale.client.name}"),
             ),
           ],
         ));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    this._sale = widget._sale;
   }
 }

@@ -3,7 +3,7 @@ import 'package:stand/models/car.dart';
 
 import 'entity.dart';
 
-part 'sale.g.dart';
+part 'generated/sale.g.dart';
 
 @JsonSerializable()
 class Sale {

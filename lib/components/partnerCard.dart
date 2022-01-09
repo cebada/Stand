@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stand/models/entity.dart';
-import 'package:stand/models/part.dart';
 
 class PartnerCard extends StatefulWidget {
   final Entity _partner;
@@ -13,7 +11,6 @@ class PartnerCard extends StatefulWidget {
 }
 
 class _PartnerCardState extends State<PartnerCard> {
-  Entity _partner;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +20,11 @@ class _PartnerCardState extends State<PartnerCard> {
           Padding(
             padding: EdgeInsets.all(16.0),
             child:ListTile(
-              title: Text("${_partner.name}",
+              title: Text("${widget._partner.name}",
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text("${_partner.entityType}"),
+              subtitle: Text("${widget._partner.entityType}"),
             )
           ),
         ]));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    this._partner = widget._partner;
   }
 }

@@ -1,13 +1,19 @@
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:stand/components/partCard.dart';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:stand/components/appBar.dart';
+import 'package:stand/components/companyLogo.dart';
+import 'package:stand/components/partCard.dart';
 import 'package:stand/models/part.dart';
-
+import 'package:stand/models/user.dart';
 
 class PartsList extends StatefulWidget {
+  final User _user;
+
+  PartsList(this._user);
+
   @override
   _PartsListState createState() => _PartsListState();
 }
@@ -16,7 +22,10 @@ class _PartsListState extends State<PartsList> {
   List<Part> parts = [];
 
   Future getData() async {
-    Response response = await http.get(Uri.parse('http://10.0.2.2:8080/parts'));
+    Response response = await http
+        .get(Uri.parse('http://10.0.2.2:8080/parts'), headers: <String, String>{
+      'Authorization': "Bearer " + widget._user.token,
+    });
     List jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       setState(() {
@@ -37,21 +46,12 @@ class _PartsListState extends State<PartsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Parts'),
-      ),
+      appBar: StandAppBar(widget._user.username, "Parts"),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Image(
-              image: AssetImage('assets/logo_rocha.png'),
-              height: 60,
-              width: 60,
-            ),
-          ),
+          CompanyLogo(60, 60),
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.vertical,

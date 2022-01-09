@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:stand/components/appBar.dart';
+import 'package:stand/components/companyLogo.dart';
 import 'package:stand/models/car.dart';
+import 'package:stand/models/user.dart';
 
 class CarDetail extends StatefulWidget {
   final Car _car;
+  final User _user;
 
-  CarDetail(this._car);
+  CarDetail(this._car, this._user);
 
   @override
   _CarDetailState createState() => _CarDetailState();
 }
 
-//TODO car detail pixel overflow
 class _CarDetailState extends State<CarDetail> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Car Detail'),
-      ),
+      appBar: StandAppBar(widget._user.username, "Car Detail"),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Image(
-              image: AssetImage('assets/logo_rocha.png'),
-              height: 60,
-              width: 60,
-            ),
-          ),
+          CompanyLogo(60, 60),
           Expanded(
             child: ListView(
               scrollDirection: Axis.vertical,
@@ -104,7 +100,7 @@ class _CarDetailState extends State<CarDetail> {
                                   Checkbox(
                                     onChanged: (val) => {
                                       setState(() {
-                                        this.widget._car.reserved = val as bool;
+                                        this.widget._car.reserved = val;
                                       })
                                     },
                                     value: widget._car.reserved,

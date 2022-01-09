@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:stand/components/appBar.dart';
+import 'package:stand/components/companyLogo.dart';
+import 'package:stand/components/menuTIle.dart';
 import 'package:stand/main.dart';
+import 'package:stand/models/user.dart';
+import 'package:stand/routes.dart';
 
 class Menu extends StatefulWidget {
+  final User _user;
+
+  Menu(this._user);
 
   @override
   _MenuState createState() => _MenuState();
@@ -12,24 +20,15 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Main Menu'),
-      ),
+      appBar: StandAppBar(widget._user.username, "Main Menu"),
       drawer: Drawer(
-        child: Text('Oi oi'),
+        child: Text('Oi oi'), //TODO finish drawer
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Image(
-                image: AssetImage('assets/logo_rocha.png'),
-                height: 120,
-                width: 120,
-              ),
-            ),
+            CompanyLogo(120, 120),
             Expanded(
                 child: GridView.count(
               scrollDirection: Axis.vertical,
@@ -39,63 +38,21 @@ class _MenuState extends State<Menu> {
               shrinkWrap: true,
               crossAxisCount: 2,
               children: [
-                RaisedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, CarListRoute);
-                  },
-                  icon: Icon(Icons.directions_car_rounded),
-                  label: Text('Cars'),
-                  elevation: 5,
-                  color: Colors.red[600],
-                  textColor: Colors.white,
-                ),
-                RaisedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, PartsListRoute);
-                  },
-                  icon: Icon(Icons.build),
-                  label: Text('Parts'),
-                  elevation: 5,
-                  color: Colors.red[600],
-                  textColor: Colors.white,
-                ),
-                RaisedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, SalesListRoute);
-                  },
-                  icon: Icon(Icons.point_of_sale),
-                  label: Text('Sales/History'),
-                  elevation: 5,
-                  color: Colors.red[600],
-                  textColor: Colors.white,
-                ),
-                RaisedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, ClientsListRoute);
-                  },
-                  icon: Icon(Icons.people),
-                  label: Text('Clients'),
-                  //child: new Text('Clients'),
-                  elevation: 5,
-                  color: Colors.red[600],
-                  textColor: Colors.white,
-                ),
-                RaisedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, SuppliersListRoute);
-                  },
-                  icon: Icon(Icons.contact_page,),
-                  label: Flexible(child: Text('Suppliers/Partners', textAlign: TextAlign.center,)),
-
-                  elevation: 5,
-                  color: Colors.red[600],
-                  textColor: Colors.white,
-                ),
+                MenuTile(Routes.CarListRoute, 'Cars', Icons.directions_car_rounded, widget._user),
+                MenuTile(Routes.PartsListRoute, 'Parts', Icons.build, widget._user),
+                MenuTile(Routes.SalesListRoute, 'Sales/History', Icons.point_of_sale, widget._user),
+                MenuTile(Routes.ClientsListRoute, 'Clients', Icons.people, widget._user),
+                MenuTile(Routes.SuppliersListRoute, 'Partners', Icons.contact_page, widget._user),
               ],
             )),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 }

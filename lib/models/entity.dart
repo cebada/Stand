@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'entity.g.dart';
+part 'generated/entity.g.dart';
 
 @JsonSerializable()
 class Entity {

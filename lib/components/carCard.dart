@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:stand/main.dart';
 import 'package:stand/models/car.dart';
+import 'package:stand/models/user.dart';
+
+import '../routes.dart';
 
 class CarCard extends StatefulWidget {
   final Car _car;
+  final User _user;
 
-  CarCard(this._car);
+  CarCard(this._car, this._user);
 
   @override
   _CarCardState createState() => _CarCardState();
 }
 
 class _CarCardState extends State<CarCard> {
-  Car _car;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, CarDetailRoute,
-            arguments: {"car": widget._car});
+        Navigator.pushNamed(context, Routes.CarDetailRoute,
+            arguments: {"car": widget._car, "user" : widget._user});
       },
       child: Card(
           elevation: 4.0,
           child: Column(
             children: [
               ListTile(
-                title: Text("${_car.brand} ${_car.model}",
+                title: Text("${widget._car.brand} ${widget._car.model}",
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text("${_car.month}, ${_car.year}"),
+                subtitle: Text("${widget._car.month}, ${widget._car.year}"),
               ),
               Container(
                 //TODO: caroussel slider
@@ -49,14 +51,14 @@ class _CarCardState extends State<CarCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Power: ${_car.power} HP'),
-                        Text('Plate: ${_car.plate}'),
+                        Text('Power: ${widget._car.power} HP'),
+                        Text('Plate: ${widget._car.plate}'),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Price: ${_car.price} €'),
+                        Text('Price: ${widget._car.price} €'),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -64,10 +66,10 @@ class _CarCardState extends State<CarCard> {
                             Checkbox(
                               onChanged: (val) => {
                                 setState(() {
-                                  this._car.reserved = val as bool;
+                                  widget._car.reserved = val;
                                 })
                               },
-                              value: _car.reserved,
+                              value: widget._car.reserved,
                               checkColor: Colors.white,
                               activeColor: Colors
                                   .red[600], //TODO verificar cor da checkbox
@@ -82,11 +84,5 @@ class _CarCardState extends State<CarCard> {
             ],
           )),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    this._car = widget._car;
   }
 }

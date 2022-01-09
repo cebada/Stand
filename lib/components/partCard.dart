@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stand/models/part.dart';
 
@@ -12,7 +11,6 @@ class PartCard extends StatefulWidget {
 }
 
 class _PartCardState extends State<PartCard> {
-  Part _part;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +22,9 @@ class _PartCardState extends State<PartCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("${_part.name}",
+                Text("${widget._part.name}",
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                Text("Cost: ${_part.cost} €")
+                Text("Cost: ${widget._part.cost} €")
               ],
             ),
           ),
@@ -35,17 +33,11 @@ class _PartCardState extends State<PartCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Bought at: ${_part.purchaseDate}"),
-                Text("From:  ${_part.supplier}")
+                Text("Bought at: ${widget._part.purchaseDate}"),
+                Text("From:  ${widget._part.supplier}")
               ],
             ),
           ),
         ]));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    this._part = widget._part;
   }
 }
