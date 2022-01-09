@@ -24,7 +24,7 @@ void main() {
       // Login
       await tester.tap(loginButton);
       await tester.pumpAndSettle();
-      await Future.delayed(new Duration(milliseconds: 1000));
+      await Future.delayed(Duration(milliseconds: 1000));
 
       // Click on cars list
       final carsMenu = find.byKey(Key("cars")).first;

@@ -21,9 +21,6 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StandAppBar(widget._user.username, "Main Menu"),
-      drawer: Drawer(
-        child: Text('Oi oi'), //TODO finish drawer
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
